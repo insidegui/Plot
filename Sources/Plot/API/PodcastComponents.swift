@@ -32,3 +32,17 @@ public extension Node where Context == PodcastFeed.ItemContext {
         )
     }
 }
+
+public extension Node where Context == PodcastFeed.ItemContext {
+    static func transcript(url: URLRepresentable,
+                           type: String,
+                           language: String? = nil,
+                           rel: String? = nil) -> Node {
+        .selfClosedElement(named: "podcast:transcript", attributes: [
+            .attribute(named: "url", value: url.string),
+            .attribute(named: "type", value: type),
+            .unwrap(language, { .attribute(named: "language", value: $0) }),
+            .unwrap(rel, { .attribute(named: "rel", value: $0) })
+        ])
+    }
+}
