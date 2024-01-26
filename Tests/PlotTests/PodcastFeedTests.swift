@@ -227,6 +227,23 @@ final class PodcastFeedTests: XCTestCase {
         assertEqualPodcastFeedContent(feed, expectedComponents.joined())
     }
 
+    func testEpisodeTranscript() {
+        let feed = PodcastFeed(.item(.transcript(
+            url: "transcript.vtt",
+            type: "text/vtt",
+            language: "en",
+            rel: "captions"
+        )))
+
+        let expectedComponents = [
+            "<item>",
+            #"<podcast:transcript url="transcript.vtt" type="text/vtt" language="en" rel="captions"/>"#,
+            "</item>"
+        ]
+
+        assertEqualPodcastFeedContent(feed, expectedComponents.joined())
+    }
+
     func testEpisodeHTMLContent() {
         let feed = PodcastFeed(.item(.content(
             "<p>Hello</p><p>World &amp; Everyone!</p>"
